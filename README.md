@@ -90,8 +90,8 @@ import Frequency
 import cv2
 
 
-KP = 0.0085
-KD = 0.0075 
+KP = 0.009
+KD = 0.0085
 
 V_MAX = 10.0
 V_MIN = 5.0
@@ -131,3 +131,4 @@ while True:
         HAL.setW(0)
         
     WebGUI.showImage(img)
+    
