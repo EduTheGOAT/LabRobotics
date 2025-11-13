@@ -7,8 +7,6 @@ V_MAX = 10.0
 V_MIN = 4.0
 IMG_CENTER = 320
 
-i = 0
-
 while True:
     img = HAL.getImage()
     
@@ -44,6 +42,3 @@ while True:
         HAL.setW(0)
 
     WebGUI.showImage(img) 
-    
-    print(i)
-    i += 1
