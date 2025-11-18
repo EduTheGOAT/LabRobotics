@@ -1,6 +1,7 @@
 import HAL
 import Frequency
 import cv2
+import WebGUI
 
 KP = 0.0095
 V_MAX = 10.0
