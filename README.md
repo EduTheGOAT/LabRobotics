@@ -203,11 +203,53 @@ With NVIDIA card
 >   -p 6080-6090:6080-6090 -p 7163:7163 jderobot/robotics-backend:latest
 > ```
 
+## [Code explanation](./src/drone_rescue.py)
 
-## [Code explanation](./src/Drone\rescue.py)
+### 1. Rotation-Invariant Face Detection
+
+The standard Haar Cascade classifiers are trained primarily on upright faces. Since the drone uses a ventral (downward-facing) camera to look for survivors lying on the ground, they can be oriented in any direction (0°, 90°, 180°, 270°).
+
+To solve this, the algorithm implements a multi-pass detection strategy:
+
+* **Logic:** The `detect_faces_with_rotation` function takes the input image and attempts detection at four different angles.
+* **Coordinate Transformation:** When a face is detected in a rotated image, the coordinates are mathematically transformed back to the original image frame using `get_original_coords`.
+* **Effect:** This ensures that a survivor is detected regardless of how they are lying on the ground relative to the drone.
+
+### 2. Persistence Tracking System
+
+To prevent false positives (noise) and double-counting (detecting the same person twice), a custom tracking system was implemented using centroid tracking.
+
+**Key Parameters:**
+* **`MIN_SEEN_FRAMES`:** A potential survivor must be detected in at least 2 consecutive frames (or close frames) to be considered valid. This filters out random image noise.
+* **`MIN_DIST_BETWEEN_PEOPLE`:** Once a survivor is confirmed and logged, their GPS coordinates are saved. The drone will ignore any new detections within a 5-meter radius of that point.
+
+**Variables Explained:**
+* **`tracked_faces` (List):** A dynamic list of dictionaries. Each entry represents a "candidate" survivor currently being tracked. It stores their centroid, bounding box, and how many times they have been seen (`seen_count`).
+* **`found_people_coords` (List):** The final list of confirmed survivors.
+
+### 3. Spiral Search Navigation
+
+Once the drone arrives at the designated search zone, it needs to cover the area efficiently. An **Archimedean Spiral** pattern was chosen over random movement or lawn-mower patterns for its fluidity and coverage from the center outwards.
+
+**Control Logic:**
+The drone maintains a constant linear velocity while adjusting its angular velocity based on the current radius.
+
+**Control Variables:**
+* **`linear_speed` ($v$):** Constant forward speed (set to `1.2 m/s`).
+* **`current_radius` ($r$):** The distance from the center of the spiral. This value increases incrementally in every loop iteration (`current_radius += 0.001`).
+* **`yaw_rate` ($\omega$):** The angular velocity command sent to the drone.
 
 
+## Results
 
+The mission is completed when the drone has located all 6 missing people. After that the drone can return to its base.
+
+
+<img width="1212" height="951" alt="image" src="https://github.com/user-attachments/assets/82647817-7604-4019-a785-1e8c464a5792" />
+
+## Authors
+
+**Eduard Munteanu Tudor - UJI**
 </details> 
 
 
