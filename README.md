@@ -144,5 +144,13 @@ The PID controller is the most complete, adding an "Integral" component based on
 
 **Eduard Munteanu Tudor - UJI**
 
-
 </details>
+
+
+
+<details>
+<summary>Drone rescue people</summary>
+
+</details> 
+  
+
