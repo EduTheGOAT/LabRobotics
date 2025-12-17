@@ -151,6 +151,63 @@ The PID controller is the most complete, adding an "Integral" component based on
 <details>
 <summary>Drone rescue people</summary>
 
+This project addresses a practical challenge proposed by the [**Unibotics**](https://unibotics.org/) educational robotics framework.
+
+## Drone Rescue People Objectives
+
+The primary objective of this exercise is to implement a robust autonomous navigation system for a drone, enabling it to explore a designated disaster area and locate survivors.
+
+This involves developing a vision-based algorithm capable of detecting people (survivors) and a flight control logic to navigate towards them. A secondary performance goal is to design an efficient search strategy to minimize the time required to locate all victims while maintaining flight stability.
+
+## Screenshots
+
+Here are some screenshots about the drone, the starting location and the survivors it has to locate.
+
+<p align="center">
+<img width="1410" height="977" alt="image" src="https://github.com/user-attachments/assets/69826728-1e46-4fb2-83d4-fe94a9b0a533" />
+
+
+<img width="2385" height="490" alt="image" src="https://github.com/user-attachments/assets/bfc3cc46-bf87-4301-8970-8d8bfb4fae42" />
+
+<img width="1106" height="614" alt="image" src="https://github.com/user-attachments/assets/81d9e7bf-2fe7-4fb2-92cf-14d17031f3b2" />
+</p>
+
+
+## How to run
+Download the Docker image
+
+> ```bash
+> docker pull jderobot/robotics-backend:latest
+> ```
+
+Launch container:
+
+Without graphic acceleration
+
+> ```bash
+> docker run --rm -it \
+>   -p 6080-6090:6080-6090 -p 7163:7163 jderobot/robotics-backend:latest
+> ```
+
+With graphic acceleration
+
+> ```bash
+> docker run --rm -it --device /dev/dri \
+>   -p 6080-6090:6080-6090 -p 7163:7163 jderobot/robotics-backend:latest
+> ```
+
+With NVIDIA card
+
+> ```bash
+> docker run --rm -it --device /dev/dri --gpus all \
+>   -p 6080-6090:6080-6090 -p 7163:7163 jderobot/robotics-backend:latest
+> ```
+
+
+
 </details> 
+
+
+
   
 
